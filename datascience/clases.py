@@ -163,3 +163,128 @@ print(df_artistas)
 ranking = df_artistas[df_artistas["ranking"] < 20]
 print(ranking)
 print(f"artista con la cancion con mejor rankin es: {df_artistas.loc[df_artistas["ranking"].argmin(), "nombre"]}")
+
+
+
+class Videojuego:
+    def __init__(self,nombre,genero,año,horas_jugadas):
+        self.nombre = nombre
+        self.año = año
+        self.horas_jugadas = horas_jugadas
+        self.genero = genero
+
+
+juegos = []
+
+def agregar_juego(v):
+    juegos.append(v)
+
+v1 = Videojuego("minecraft", "superviviencia",2011, 46)
+v2 = Videojuego("fortnite", "pvp",2015, 100)
+v3 = Videojuego("lol", "pvp",2006, 20)
+v4 = Videojuego("brawhall", "pvp",2010, 55)
+v5 = Videojuego("zelda", "mundo abierto",1999, 32)
+agregar_juego(v1)
+agregar_juego(v2)
+agregar_juego(v3)
+agregar_juego(v4)
+agregar_juego(v5)
+
+lista = []
+
+
+for v in juegos:
+    
+    lista.append({
+        "titulo": v.nombre,
+        "genero" : v.genero,
+        "año": v.año,
+        "horas jugadas": v.horas_jugadas
+    })
+
+df_videojugo = pd.DataFrame(lista)
+print(df_videojugo)
+print(df_videojugo[df_videojugo["horas jugadas"] > 40])
+mas_jugado  = df_videojugo["horas jugadas"].argmax()
+print(mas_jugado)
+print(df_videojugo.loc[mas_jugado,"titulo"])
+fil_promedio = df_videojugo["horas jugadas"].mean()
+df_videojugo.loc["promedio"] = ["-","-","-", fil_promedio]
+print(df_videojugo)
+
+
+# ! ejericcio 5 (restaruante)
+
+
+# * class madre
+class Restaurante:
+    
+    def __init__(self,nombre,tipo_comida,clasificacion ,ciudad):
+        self.nombre = nombre
+        self.tipoComida = tipo_comida
+        self.clasificacion = float(clasificacion)
+        self.ciudad = ciudad
+        
+ 
+# * creamos la funcion para agragar los objetos en una lista para luego agregarlos al dataframe
+ 
+restaurantes = []
+def agregar_restaurante(r):
+    restaurantes.append(r)
+ 
+r1 = Restaurante("Arabe Gourmet", "Arabe", 4.8, "Medellin")
+r2 = Restaurante("Narcobollo", "Costeña", 4.5, "Barranquilla")
+r3 = Restaurante("Pizzeria Italiana", "Italiana", 4.2, "Bogota")
+r4 = Restaurante("La Cueva", "Internacional", 4.7, "Valledupar")
+r5 = Restaurante("KFC", "Comida Rapida", 4.0, "Barranquilla")
+r6 = Restaurante("Dominos Pizza", "Pizza", 4.3, "Bogota")
+r7 = Restaurante("Burger King", "Hamburguesas", 3.9, "Barranquilla")
+r8 = Restaurante("Subway", "Sandwiches", 4.1, "Medellin")
+r9 = Restaurante("Sarab", "Arabe", 4.9, "Cali")
+r10 = Restaurante("Cuzco Cocina Peruana", "Peruana", 4.6, "Cali")
+
+agregar_restaurante(r1)
+agregar_restaurante(r2)
+agregar_restaurante(r3)
+agregar_restaurante(r4)
+agregar_restaurante(r5)
+agregar_restaurante(r6)
+agregar_restaurante(r7)
+agregar_restaurante(r8)
+agregar_restaurante(r9)
+agregar_restaurante(r10)
+
+lista = []
+
+for r in restaurantes:
+    
+    lista.append({
+        "nombre": r.nombre,
+        "tipo de comida": r.tipoComida,
+        "clasificacion" : r.clasificacion,
+        "ciudad": r.ciudad
+    })
+    
+# * creamos el data frame
+
+df_restaurante = pd.DataFrame(lista)
+
+
+# variables para filtrar por ciudades 
+barranquilla = df_restaurante.loc[df_restaurante["ciudad"] == "Barranquilla"]
+cali = df_restaurante[df_restaurante["ciudad"] == "Cali"]
+medellin = df_restaurante[df_restaurante["ciudad"] == "Medellin"]
+bogota = df_restaurante[df_restaurante["ciudad"] == "Bogota"]
+
+
+promedio = round(barranquilla["clasificacion"].mean(), 2)
+barranquilla.loc["promedio"] = ["-","-", promedio,"-"]
+print(barranquilla)
+
+promedio = round(cali["clasificacion"].mean(), 2)
+cali.loc["promedio"] = ["-","-", promedio,"-"]
+print(cali)
+
+
+mejor_cl = df_restaurante["clasificacion"].argmax()
+print(f"el mejor restaurante claisificado es: {df_restaurante.loc[mejor_cl,"nombre"]} de la ciudad de {df_restaurante.loc[mejor_cl,"ciudad"]} ")
