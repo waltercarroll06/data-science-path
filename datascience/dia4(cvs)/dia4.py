@@ -16,5 +16,4 @@ print(ciudad["cantidad"].sum())
 col_venta = df["precio"] * df["cantidad"]
 df["total_venta"] = col_venta
 print(df)
-print(df.loc[df["total_venta"].idxmax(), "ciudad"])
 print(df.groupby("ciudad")["total_venta"].sum().idxmax())

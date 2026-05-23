@@ -298,21 +298,7 @@ print(f"el mejor restaurante claisificado es: {df_restaurante.loc[mejor_cl,"nomb
 
 
 
-def encontrar(target,lista):
-    left = 0
-    right = len(lista)-1
-    while left <= right:
-    
-        mid = (left + right) // 2
-    
-        if lista[mid] == target:
-            return f"encontrado: {lista[mid]}"    
-        elif lista[mid] < target:
-            left = mid + 1
-        else:
-            right = mid- 1 
-    return "not found"
 
-encontrar(5, [1,3,5,6])  # → debe retornar índice 2
-encontrar(2, [1,3,5,6])  # → debe retornar índice 1
-encontrar(7, [1,3,5,6])  # → debe retornar índice 4
+
+
+

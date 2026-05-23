@@ -81,4 +81,7 @@ venta.a_dataframe()
 venta.guardar_csv()
 df = venta.leer_csv()
 
-print(df.groupby("fruta")["cantidad"].sum())
+mas_vendida = df.groupby("fruta")["cantidad"].sum().idxmax()
+menos_vendida = df.groupby("fruta")["cantidad"].sum().idxmin()
+print(f"Fruta más vendida: {mas_vendida}")
+print(f"Fruta menos vendida: {menos_vendida}")

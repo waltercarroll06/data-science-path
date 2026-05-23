@@ -55,6 +55,52 @@ Este repositorio documenta **mi viaje de aprendizaje en Data Science**. Aquí mu
   3. Análisis de temperaturas por ciudades (máximas, promedios)
   4. Clase `Artistas` → conversión a DataFrame → filtrado por ranking
 
+### Día 4 - CSV y Análisis Real
+- `pd.read_csv()` para leer archivos externos
+- `df.describe()` para estadísticas generales
+- `df.dtypes` para ver tipos de datos
+- `groupby()` para agrupar y analizar por categoría
+- `nunique()` para contar valores únicos
+- Columna calculada: `precio * cantidad`
+- Ejercicio: análisis completo de ventas reales
+
+### Día 5 - Clases Avanzadas + Pandas + CSV + LeetCode
+
+#### Conceptos aprendidos
+- **Relación entre clases**: cómo una clase usa objetos de otra
+- **Encapsulamiento**: guardar lógica dentro de la clase
+- **agregar_varios()**: pasar listas de objetos entre clases
+- **self**: cuándo y por qué usarlo
+- **Clases + Pandas + CSV**: flujo completo de datos
+
+#### Ejercicios realizados
+1. **Sistema de Salón** — clase `Estudiante` + clase `Salon`
+   - Relación entre clases
+   - Conversión a DataFrame
+   - Guardar y leer CSV
+   - Filtrar aprobados
+
+2. **Sistema de Tienda** — clase `Producto` + clase `Tienda`
+   - `agregar_varios()` con lista
+   - `total()` acumulando precios
+   - DataFrame con fila de total
+   - Guardar y leer CSV
+
+3. **App Frutería** — clase `Fruta` + `Tienda` + `Venta`
+   - App completa con menú interactivo
+   - Input del usuario con validaciones
+   - Registro de ventas en CSV
+   - Análisis con `groupby()` — fruta más y menos vendida
+
+#### LeetCode
+- **Search Insert Position** (Easy) — Búsqueda binaria O(log n)
+- **Two Sum** (Easy) — Dos loops O(n²)
+
+#### Crecimiento observado
+- De clases simples a **múltiples clases relacionadas**
+- De datos manuales a **apps interactivas con CSV**
+- De análisis básico a **toma de decisiones con groupby()**
+
 #### 🎯 Crecimiento Observado
 - De usar **loops y operaciones manuales** (Día 1-2) a **métodos automáticos de análisis** (Día 3)
 - De **arrays simples** a **estructuras nombradas** que facilitan la interpretación
