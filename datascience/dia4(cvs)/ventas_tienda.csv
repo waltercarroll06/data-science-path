@@ -1,0 +1,16 @@
+producto,categoria,precio,cantidad,mes,ciudad
+Arroz,Alimentos,2500,150,Enero,Bogota
+Leche,Alimentos,3200,200,Enero,Medellin
+Shampoo,Higiene,8900,80,Enero,Cali
+Jabon,Higiene,1500,300,Enero,Bogota
+Cereal,Alimentos,12000,60,Enero,Barranquilla
+Arroz,Alimentos,2500,180,Febrero,Medellin
+Leche,Alimentos,3200,220,Febrero,Bogota
+Shampoo,Higiene,8900,95,Febrero,Barranquilla
+Jabon,Higiene,1500,280,Febrero,Cali
+Cereal,Alimentos,12000,75,Febrero,Bogota
+Arroz,Alimentos,2500,200,Marzo,Cali
+Leche,Alimentos,3200,190,Marzo,Barranquilla
+Shampoo,Higiene,8900,110,Marzo,Bogota
+Jabon,Higiene,1500,320,Marzo,Medellin
+Cereal,Alimentos,12000,90,Marzo,Cali
