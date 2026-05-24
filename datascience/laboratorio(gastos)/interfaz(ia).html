@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastos Personales</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem; }
+  .app { max-width: 900px; margin: 0 auto; }
+  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .header h1 { font-size: 20px; font-weight: 500; }
+  .header p { font-size: 13px; color: #666; margin-top: 2px; }
+  .badge { font-size: 12px; padding: 4px 12px; border-radius: 8px; background: #e6f4ee; color: #1a7a4a; }
+  .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.5rem; }
+  .metric { background: #ececec; border-radius: 8px; padding: 1rem; }
+  .metric-label { font-size: 12px; color: #666; margin-bottom: 6px; }
+  .metric-value { font-size: 22px; font-weight: 500; }
+  .metric-value.danger { color: #c0392b; }
+  .metric-value.success { color: #1a7a4a; }
+  .main { display: grid; grid-template-columns: 1fr 280px; gap: 16px; }
+  .card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 16px; }
+  .card:last-child { margin-bottom: 0; }
+  .card-title { font-size: 11px; font-weight: 500; color: #999; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  th { text-align: left; padding: 6px 8px; color: #888; font-weight: 400; border-bottom: 1px solid #eee; }
+  td { padding: 8px; border-bottom: 1px solid #eee; }
+  tr:last-child td { border-bottom: none; }
+  .cat-badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; }
+  .cat-Comida { background: #eaf3de; color: #3b6d11; }
+  .cat-Transporte { background: #e6f1fb; color: #185fa5; }
+  .cat-Entretenimiento { background: #eeedfe; color: #534ab7; }
+  .cat-Salud { background: #e1f5ee; color: #0f6e56; }
+  .cat-Ropa { background: #fbeaf0; color: #993556; }
+  .cat-Educacion { background: #faeeda; color: #854f0b; }
+  .cat-Servicios { background: #f1efe8; color: #5f5e5a; }
+  .cat-Otro { background: #faece7; color: #993c1d; }
+  .form-group { margin-bottom: 12px; }
+  .form-label { font-size: 12px; color: #666; margin-bottom: 4px; display: block; }
+  select, input[type="text"], input[type="number"] { width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #1a1a1a; outline: none; }
+  select:focus, input:focus { border-color: #888; }
+  .btn-add { width: 100%; margin-top: 4px; font-size: 13px; padding: 9px; border: 1px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; color: #1a1a1a; }
+  .btn-add:hover { background: #f5f5f5; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .bar-label { font-size: 12px; color: #666; width: 100px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar-wrap { flex: 1; background: #eee; border-radius: 4px; height: 8px; }
+  .bar-fill { height: 8px; border-radius: 4px; background: #185fa5; transition: width 0.4s; }
+  .bar-val { font-size: 11px; color: #888; width: 70px; text-align: right; flex-shrink: 0; }
+  .empty { text-align: center; padding: 2rem; color: #aaa; font-size: 13px; }
+  .nota { font-size: 11px; color: #aaa; margin-top: 1.5rem; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- 
+  App de Gastos Personales
+  Interfaz creada con IA (Claude) — Walter Carroll
+  Lógica backend: Python + Pandas + CSV (gastos_app.py)
+-->
+
+<div class="app">
+  <div class="header">
+    <div>
+      <h1>Gastos personales</h1>
+      <p id="user-label">Walter — salario: $1.000.000</p>
+    </div>
+    <span class="badge" id="status-badge">0 registros</span>
+  </div>
+
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Salario</div>
+      <div class="metric-value" id="m-salario">$1.000.000</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Total gastado</div>
+      <div class="metric-value danger" id="m-gastado">$0</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Disponible</div>
+      <div class="metric-value success" id="m-disponible">$1.000.000</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div>
+      <div class="card">
+        <div class="card-title">Historial de gastos</div>
+        <div id="table-container">
+          <div class="empty">Aún no hay gastos registrados</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Gastos por categoría</div>
+        <div id="bars-container">
+          <div class="empty">Sin datos aún</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-title">Agregar gasto</div>
+        <div class="form-group">
+          <label class="form-label">Categoría</label>
+          <select id="f-cat">
+            <option>Comida</option>
+            <option>Transporte</option>
+            <option>Entretenimiento</option>
+            <option>Salud</option>
+            <option>Ropa</option>
+            <option>Educacion</option>
+            <option>Servicios</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descripción</label>
+          <input type="text" id="f-nombre" placeholder="ej: almuerzo">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Precio ($)</label>
+          <input type="number" id="f-precio" placeholder="ej: 15000" min="0">
+        </div>
+        <button class="btn-add" onclick="agregarGasto()">Agregar gasto</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="nota">Interfaz creada con IA (Claude) — lógica backend en Python por Walter Carroll</p>
+</div>
+
+<script>
+const SALARIO = 1000000;
+let gastos = [];
+
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('es-CO');
+}
+
+function render() {
+  const total = gastos.reduce((s, g) => s + g.precio, 0);
+  const disp = SALARIO - total;
+
+  document.getElementById('m-gastado').textContent = fmt(total);
+  document.getElementById('m-disponible').textContent = fmt(disp);
+  document.getElementById('m-disponible').className = 'metric-value ' + (disp < 0 ? 'danger' : 'success');
+  document.getElementById('status-badge').textContent = gastos.length + ' registro' + (gastos.length !== 1 ? 's' : '');
+
+  const tc = document.getElementById('table-container');
+  if (!gastos.length) {
+    tc.innerHTML = '<div class="empty">Aún no hay gastos registrados</div>';
+  } else {
+    const rows = gastos.map((g, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td><span class="cat-badge cat-${g.categoria}">${g.categoria}</span></td>
+        <td style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${g.nombre}</td>
+        <td style="text-align:right;font-weight:500">${fmt(g.precio)}</td>
+      </tr>`).join('');
+    tc.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32px">#</th>
+            <th style="width:120px">Cat.</th>
+            <th>Descripción</th>
+            <th style="width:90px;text-align:right">Precio</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  const bc = document.getElementById('bars-container');
+  if (!gastos.length) {
+    bc.innerHTML = '<div class="empty">Sin datos aún</div>';
+    return;
+  }
+  const cats = {};
+  gastos.forEach(g => { cats[g.categoria] = (cats[g.categoria] || 0) + g.precio; });
+  const max = Math.max(...Object.values(cats));
+  bc.innerHTML = Object.entries(cats)
+    .sort((a, b) => b[1] - a[1])
+    .map(([cat, val]) => `
+      <div class="bar-row">
+        <span class="bar-label">${cat}</span>
+        <div class="bar-wrap">
+          <div class="bar-fill" style="width:${Math.round(val / max * 100)}%"></div>
+        </div>
+        <span class="bar-val">${fmt(val)}</span>
+      </div>`).join('');
+}
+
+function agregarGasto() {
+  const cat = document.getElementById('f-cat').value;
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const precio = parseInt(document.getElementById('f-precio').value);
+  if (!nombre || isNaN(precio) || precio <= 0) {
+    alert('Completa todos los campos correctamente');
+    return;
+  }
+  gastos.push({ categoria: cat, nombre, precio });
+  document.getElementById('f-nombre').value = '';
+  document.getElementById('f-precio').value = '';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

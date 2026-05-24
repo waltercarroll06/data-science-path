@@ -106,6 +106,38 @@ Este repositorio documenta **mi viaje de aprendizaje en Data Science**. Aquí mu
 - De **arrays simples** a **estructuras nombradas** que facilitan la interpretación
 - Inicio de **análisis real de datos** con filtrado, aggregación y clasificación
 
+
+### Día 6 - Pandas avanzado + Clases + CSV + LeetCode
+
+#### Conceptos aprendidos
+- **with open** → escribir en CSV manualmente
+- **os.path.exists()** → verificar si un archivo existe antes de crearlo
+- **groupby + agg()** → análisis por categorías
+- **Operadores en Pandas** → & (and), | (or), ~ (not)
+- **Filtros combinados** → múltiples condiciones en una línea
+- **Relación entre clases** → Gastos recibe y usa objeto Usuario
+
+#### Ejercicios realizados
+1. **Filtros con estudiantes** — `&`, `|`, condiciones combinadas
+2. **App de Gastos Personales** — proyecto completo:
+   - Clase `Usuario` + clase `Gastos`
+   - Menú interactivo con `while True`
+   - `with open` para escribir CSV
+   - Pandas para leer y analizar
+   - `groupby` para gastos por categoría
+   - Resumen salario vs gastos
+3. **Interfaz HTML** — preview visual de la app (creada con IA)
+
+#### LeetCode
+- **Check if Array is Sorted and Rotated** (Easy) — contar bajones
+
+#### Crecimiento observado
+- De leer CSV a **escribir CSV con with open**
+- De filtros simples a **filtros combinados con & y |**
+- De clases aisladas a **clases que se relacionan y comparten datos**
+
+
+
 ---
 
 ## 📚 Temas en Exploración
